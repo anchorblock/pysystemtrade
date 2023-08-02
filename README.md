@@ -72,7 +72,7 @@ sudo pip3 install ....
 This package isn't hosted on pip. So to get the code the easiest way is to use git:
 
 ```
-git clone https://github.com/robcarver17/pysystemtrade.git  
+git clone https://github.com/anchorblock/pysystemtrade.git  
 cd pysystemtrade  
 conda create -n pysys python=3.8 
 conda activate pysys 
