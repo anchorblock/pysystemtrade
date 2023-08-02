@@ -74,7 +74,8 @@ This package isn't hosted on pip. So to get the code the easiest way is to use g
 ```
 git clone https://github.com/robcarver17/pysystemtrade.git  
 cd pysystemtrade  
-conda create -n pysys python=3.8  
+conda create -n pysys python=3.8 
+conda activate pysys 
 pip install -r requirements.txt  
 python3 setup.py install
 
