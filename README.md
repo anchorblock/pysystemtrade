@@ -72,13 +72,12 @@ sudo pip3 install ....
 This package isn't hosted on pip. So to get the code the easiest way is to use git:
 
 ```
-git clone https://github.com/robcarver17/pysystemtrade.git
-#
-# then one of:
-#
-python3 setup.py install # normal
-python3 setup.py develop # required if using ipython so sessions can see files inside subdirectories which would otherwise be inaccessible.
-python3 setup.py install --user # avoids use of sudo
+git clone https://github.com/robcarver17/pysystemtrade.git  
+cd pysystemtrade  
+conda create -n pysys python=3.8  
+pip install -r requirements.txt  
+python3 setup.py install
+
 ```
 
 Again, you may be okay with python rather than python3.
