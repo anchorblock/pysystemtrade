@@ -170,11 +170,11 @@ def sma(price, vol, Lfast, Lslow):
     fast_sma = price.rolling(Lfast, min_periods=1).mean()
     slow_sma = price.rolling(Lslow, min_periods=1).mean()
 
-    raw_ewmac = fast_sma - slow_sma
-    raw_ewmac= np.where(fast_sma >slow_sma, 1, 0)
-    raw_ewmac= np.where(fast_sma <slow_sma, -1, raw_ewmac)
+    # raw_ewmac = fast_sma - slow_sma
+    # raw_ewmac= np.where(fast_sma >slow_sma, 1, 0)
+    # raw_ewmac= np.where(fast_sma <slow_sma, -1, raw_ewmac)
    
-    raw_ewmac=pd.Series(raw_ewmac,index=fast_sma.index)
+    raw_ewmac=pd.Series(10,index=fast_sma.index)
     print(raw_ewmac)
 
     return raw_ewmac 
