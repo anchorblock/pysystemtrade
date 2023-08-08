@@ -1,4 +1,6 @@
 from sysquant.estimators.vol import robust_vol_calc
+import numpy as np
+import pandas as pd
 
 
 def ewmac_forecast_with_defaults(price, Lfast=32, Lslow=128):
@@ -120,9 +122,62 @@ def ewmac(price, vol, Lfast, Lslow):
     fast_ewma = price.ewm(span=Lfast, min_periods=1).mean()
     slow_ewma = price.ewm(span=Lslow, min_periods=1).mean()
     raw_ewmac = fast_ewma - slow_ewma
-    print(raw_ewmac / vol.ffill())
 
     return raw_ewmac / vol.ffill()
+  
+  
+def sma(price, vol, Lfast, Lslow):
+    """
+    Calculate the ewmac trading rule forecast, given a price, volatility and EWMA speeds Lfast and Lslow
+
+    Assumes that 'price' and vol is daily data
+
+    This version uses a precalculated price volatility, and does not do capping or scaling
+
+    :param price: The price or other series to use (assumed Tx1)
+    :type price: pd.Series
+
+    :param vol: The daily price unit volatility (NOT % vol)
+    :type vol: pd.Series aligned to price
+
+    :param Lfast: Lookback for fast in days
+    :type Lfast: int
+
+    :param Lslow: Lookback for slow in days
+    :type Lslow: int
+
+    :returns: pd.Series -- unscaled, uncapped forecast
+
+
+    >>> from systems.tests.testdata import get_test_object_futures
+    >>> from systems.basesystem import System
+    >>> (rawdata, data, config)=get_test_object_futures()
+    >>> system=System( [rawdata], data, config)
+    >>>
+    >>> ewmac(rawdata.get_daily_prices("EDOLLAR"), rawdata.daily_returns_volatility("EDOLLAR"), 64, 256).tail(2)
+    2015-12-10    5.327019
+    2015-12-11    4.927339
+    Freq: B, dtype: float64
+    """
+    # price: This is the stitched price series
+    # We can't use the price of the contract we're trading, or the volatility will be jumpy
+    # And we'll miss out on the rolldown. See
+    # https://qoppac.blogspot.com/2015/05/systems-building-futures-rolling.html
+
+    # We don't need to calculate the decay parameter, just use the span
+    # directly
+
+    fast_sma = price.rolling(Lfast, min_periods=1).mean()
+    slow_sma = price.rolling(Lslow, min_periods=1).mean()
+
+    # raw_ewmac = fast_sma - slow_sma
+    # raw_ewmac= np.where(fast_sma >slow_sma, 1, 0)
+    # raw_ewmac= np.where(fast_sma <slow_sma, -1, raw_ewmac)
+   
+    raw_ewmac=pd.Series(10,index=fast_sma.index)
+    print(raw_ewmac)
+
+    return raw_ewmac 
 
 
 def ewmac_calc_vol(price, Lfast, Lslow, vol_days=35):

@@ -77,7 +77,8 @@ cd pysystemtrade
 conda create -n pysys python=3.8 
 conda activate pysys 
 pip install -r requirements.txt  
-python3 setup.py install
+#python3 setup.py install # normal
+python3 setup.py develop # required if using ipython so sessions can see files inside subdirectories which would otherwise be
 
 ```
 

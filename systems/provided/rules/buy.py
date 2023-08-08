@@ -23,4 +23,5 @@ def buy_and_hold_with_variable_risk_scaling(price, risk, std=0.1002):
     
     N = (capital * risk ) / (multiplier * price * sigma)
     pred = pd.Series(N, index = price.index)
+
     return pred
