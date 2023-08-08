@@ -1,0 +1,31 @@
+trading_rules:
+  buy_and_hold:
+    function: systems.provided.rules.buy.buy_and_hold
+    data:
+      - "rawdata.get_daily_prices"
+
+  buy_and_hold_with_risk_scaling:
+    function: systems.provided.rules.buy.buy_and_hold_with_risk_scaling
+    data:
+      - "rawdata.get_daily_prices"
+    other_args:
+      risk: 0.2
+
+  buy_and_hold_with_variable_risk_scaling:
+    function: systems.provided.rules.buy.buy_and_hold_with_variable_risk_scaling
+    data:
+      - "rawdata.get_daily_prices"
+    other_args:
+      risk: 0.2
+      std: 0.1
+
+rule_groups:
+  buy_and_hold:
+    - buy_and_hold
+  buy_and_hold_with_risk_scaling:
+    - buy_and_hold_with_risk_scaling
+  buy_and_hold_with_variable_risk_scaling:
+    - buy_and_hold_with_variable_risk_scaling
+
+notional_trading_capital: 22000
+base_currency: "USD"
